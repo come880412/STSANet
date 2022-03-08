@@ -7,7 +7,7 @@ The pytorch implementation of [1] (non-official)
 
 # Model architecture
 <p align="center">
-<img src="https://github.com/come880412/STSANet/blob/main/image/model.png" width=30% height=30%>
+<img src="https://github.com/come880412/STSANet/blob/main/image/model.png" width=40% height=40%>
 </p>
 
 # Training & Inference
