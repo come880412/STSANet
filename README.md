@@ -10,6 +10,9 @@ The pytorch implementation of [1] (non-official)
 <img src="https://github.com/come880412/STSANet/blob/main/image/model.png" width=40% height=40%>
 </p>
 
+# Dataset download
+You can download the datasets from here [dataset](https://github.com/samyak0210/ViNet)
+
 # Training & Inference
 ```bash
 $ bash run_train.sh
