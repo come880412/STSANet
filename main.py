@@ -153,7 +153,6 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_data, batch_size=opt.batch_size, num_workers=opt.workers)
     valid_loader = DataLoader(valid_data, batch_size=1, num_workers=opt.workers)
     
-    print("Hello")
     # define model
     model = STSANet(opt.temporal, opt.image_width, opt.image_height).cuda(1)
     """Load backbone pretrained weight"""
