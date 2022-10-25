@@ -138,8 +138,8 @@ if __name__ == '__main__':
     parser.add_argument("--workers", type=int, default=0, help="number of threads")
     parser.add_argument("--lr", type=float, default=1e-4, help="Initial learning rate")
 
-    parser.add_argument("--image_width", type=int, default=384, help="image width")
-    parser.add_argument("--image_height", type=int, default=224, help="image height")
+    parser.add_argument("--image_width", type=int, default=224, help="image width")
+    parser.add_argument("--image_height", type=int, default=384, help="image height")
     parser.add_argument("--temporal", type=int, default=32, help="Temporal dimension")
     opt = parser.parse_args()
 

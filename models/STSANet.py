@@ -81,24 +81,24 @@ class STSANet(nn.Module):
     def forward(self, x):
         [y0, y1, y2, y3] = self.backbone(x)
 
-        y0 = self.downsample_conv3d_0(y0) # (batch, 192, 4, 96, 56)
-        y1 = self.downsample_conv3d_1(y1) # (batch, 480, 4, 48, 28)
-        y2 = self.downsample_conv3d_2(y2) # (batch, 832, 4, 24, 14)
-        # y3 shape: (batch, 1024, 4, 12, 7)
+        y0 = self.downsample_conv3d_0(y0) # (batch, 192, 4, 56, 96)
+        y1 = self.downsample_conv3d_1(y1) # (batch, 480, 4, 28, 48)
+        y2 = self.downsample_conv3d_2(y2) # (batch, 832, 4, 14, 24)
+        # y3 shape: (batch, 1024, 4, 7, 12)
 
-        y0 = self.spatial_bottleneck(y0) # (batch, 96, 4, 96, 56)
-        y1 = self.STSA_0(y1) # (batch, 240, 4, 48, 28)
-        y2 = self.STSA_1(y2) # (batch, 416, 4, 24, 14)
-        y3 = self.STSA_2(y3) # (batch, 512, 4, 12, 7)
+        y0 = self.spatial_bottleneck(y0) # (batch, 96, 4, 56, 96)
+        y1 = self.STSA_0(y1) # (batch, 240, 4, 28, 48)
+        y2 = self.STSA_1(y2) # (batch, 416, 4, 14, 24)
+        y3 = self.STSA_2(y3) # (batch, 512, 4, 7, 12)
 
-        y3 = self.deconv3d(y3) # (batch, 416, 4, 24, 14)
+        y3 = self.deconv3d(y3) # (batch, 416, 4, 14, 24)
 
-        out = self.AMSF_1(y2, y3) # (batch, 240, 4, 48, 28)
-        out = self.AMSF_2(y1, out) # (batch, 96, 4, 96, 56)
-        out = self.AMSF_3(y0, out) # (batch, 16, 4, 192, 112)
+        out = self.ASMF_1(y3, y2) # (batch, 240, 4, 28, 48)
+        out = self.ASMF_2(out, y1) # (batch, 96, 4, 56, 96)
+        out = self.ASMF_3(out, y0) # (batch, 16, 4, 112, 192)
 
-        out = self.out_module(out) # (batch, 1, 1, 384, 224)
-        out = out.view(out.size(0), out.size(3), out.size(4)) # (batch, 384, 224)
+        out = self.out_module(out) # (batch, 1, 1, 224, 384)
+        out = out.view(out.size(0), out.size(3), out.size(4)) # (batch, 224, 384)
     
         return out
 

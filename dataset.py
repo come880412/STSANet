@@ -24,7 +24,7 @@ class DHF1KDataset(Dataset):
 		self.alternate = alternate
 		self.image_width, self.image_height = opt.image_width, opt.image_height
 		self.img_transform = transforms.Compose([
-			transforms.Resize((self.image_height, self.image_width)),
+			transforms.Resize((self.image_width, self.image_height)),
 			transforms.ToTensor(),
 			transforms.Normalize(
 				[0.485, 0.456, 0.406],
