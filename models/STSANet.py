@@ -34,7 +34,7 @@ class Spatial_bottleneck(nn.Module):
         return x
 
 class STSANet(nn.Module):
-    def __init__(self, T=32, w=384, h=224):
+    def __init__(self, T=32, w=224, h=384):
         super(STSANet, self).__init__()
         self.backbone = BackBoneS3D() # channels: 192 --> 480 --> 832 --> 1024
         
@@ -93,9 +93,9 @@ class STSANet(nn.Module):
 
         y3 = self.deconv3d(y3) # (batch, 416, 4, 14, 24)
 
-        out = self.ASMF_1(y3, y2) # (batch, 240, 4, 28, 48)
-        out = self.ASMF_2(out, y1) # (batch, 96, 4, 56, 96)
-        out = self.ASMF_3(out, y0) # (batch, 16, 4, 112, 192)
+        out = self.AMSF_1(y3, y2) # (batch, 240, 4, 28, 48)
+        out = self.AMSF_2(out, y1) # (batch, 96, 4, 56, 96)
+        out = self.AMSF_3(out, y0) # (batch, 16, 4, 112, 192)
 
         out = self.out_module(out) # (batch, 1, 1, 224, 384)
         out = out.view(out.size(0), out.size(3), out.size(4)) # (batch, 224, 384)
@@ -104,8 +104,8 @@ class STSANet(nn.Module):
 
 
 if __name__ == '__main__':
-    image = torch.randn(1, 3, 32, 224, 384).cuda(1)
-    model = STSANet().cuda(1)
+    image = torch.randn(2, 3, 32, 224, 384)
+    model = STSANet()
 
     file_weight = './checkpoints/S3D_kinetics400.pt'
     if os.path.isfile(file_weight):
